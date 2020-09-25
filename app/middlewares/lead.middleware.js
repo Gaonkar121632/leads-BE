@@ -3,7 +3,7 @@ var validator = require('joi');
 
 let logger = require("../services/logger");
 exports.validateLeads = async (req, res, next) => {
-    logger.info("web | middleware | validateCoupon | validating request params");
+    logger.info("web | middleware | validatelead | validating request params");
     let location = validator.object().keys({
         type: validator.string(),
         coordinates: validator.string()
@@ -46,7 +46,7 @@ exports.validateLeads = async (req, res, next) => {
 
 
 exports.validateLead = async (req, res, next) => {
-    logger.info("web | middleware | validateCoupon | validating request params");
+    logger.info("web | middleware | validatelead | validating request params");
 
     let schema = validator.object().keys({
         category: validator.string().required(),

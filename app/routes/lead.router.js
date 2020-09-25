@@ -1,5 +1,5 @@
 /*
-Coupon Routes
+lead Routes
 */
 
 const LeadsController = require('../controllers/lead.controller');
