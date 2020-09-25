@@ -1,36 +1,46 @@
-# Coupon App
+# Lead creation App
 
-Coupon app using, node.js with the Express.JS framework, REST API.
+App using, node.js with the Express.JS framework, mongodb,REST API.
+
+## System Requirement
+* Node.js 8+
+* MongoDB
+
 ## Dependency
 * mongoose
 * express
 * joi
 * body-parser
-## Link
 
-* [https://fierce-lowlands-61603.herokuapp.com/](https://fierce-lowlands-61603.herokuapp.com/): find the production link here.  This is hosted in Heroku's free tier, so it may be slow 
-
-## Features
-
-* User can validate existing coupon
-* User can create new coupon
-   * There are two type coupon [flat,percent]
-   * Max. Discount amount is considered only coupon type is percent
-* Frontend and backend are served in single project
-* Basic folder structure followed
-* Used Html,Bootstrap,javascript for frontend.
-* User can see existing token
+## Note
+* User can create leads, copy the body from https://run.mocky.io/v3/d026e567-47a8-4cee-b9ac-23d9123603ba
+   * Since the body is in Array I have implemented 2 post api
+   * One for creating many leads at time (use same response of above link).
+   * Another one for creating single lead ( use single object as input).
+* user can list all leads created
+* User can get leads by Id
+* Swagger documentation added
 
 ## Note 
-* Basic features are implemented
-* UI Issues and bugs may exist
+* Basic features and validation are implemented
+* find the Swagger UI at http://localhost:3004/api-docs/
+* Specify Developent(dev) and production(prod) Environment while running the app (by default dev)
+
+## API-Docs
+* POST http://localhost:3004/api/leads Plese refer the json body from the above link
+* GET  http://localhost:3004/api/leads
+* GET  http://localhost:3004/api/leads/:leadId
+
+* POST http://localhost:3004/api/lead/single (use sigle object from the the data array)
+* 
 
 ## Running in Local
 
-	git clone https://github.com/Gaonkar121632/coupon-BE
-	cd coupon-BE
+	git clone https://github.com/Gaonkar121632/leads-BE
+	cd leads-BE
 	npm install
-	node server.js
+	npm start 
+	or
+	NODE_ENV=dev node server.js
 	
-	Open public/app.js change the url variable as mentioned in the same file.
-	Open http://localhost:3004/
+	Open http://localhost:3004/api-docs/
