@@ -7,7 +7,7 @@ let mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 /**
- * Coupon schema
+ * Lead schema
  */
 const pointSchema = new mongoose.Schema({
     type: {
@@ -22,11 +22,11 @@ const pointSchema = new mongoose.Schema({
 });
 
 
-const CouponSchema = new Schema({
+const LeadSchema = new Schema({
     category: {
         type: String,
         required: true,
-        enum: ['Home Improvement',"Plumbing","Carpentry"]
+        enum: ['Home Improvement', "Plumbing", "Carpentry"]
     },
     firstname: {
         type: String,
@@ -69,17 +69,11 @@ const CouponSchema = new Schema({
  * - virtuals
  */
 
-CouponSchema.virtual('id').get(function () {
-    return this._id.toHexString();
-});
 
-CouponSchema.set('toJSON', {
+LeadSchema.set('toJSON', {
     virtuals: true
 });
 
-CouponSchema.findById = function (cb) {
-    return this.model('Coupons').find({ id: this.id }, cb)
-}
 
 /**
  * Methods
@@ -95,43 +89,38 @@ CouponSchema.findById = function (cb) {
  * Register
  */
 
-const Coupon = mongoose.model('Coupon', CouponSchema);
+const Lead = mongoose.model('Lead', LeadSchema);
 
 
 
-exports.findByCouponId = (id) => {
-    return Coupon.findOne({ CouponId: id })
+exports.findByLeadId = async (lead) => {
+    try {
+        return await Lead.findOne({ _id: lead.leadId });
+    } catch (error) {
+        throw Error("Lead Id not exist")
+    }
 }
 
-exports.createCoupon = async (CouponData) => {
+exports.createLeads = async (LeadData) => {
     try {
-        return await Coupon.insertMany(CouponData.data);
+        return await Lead.insertMany(LeadData.data);
     } catch (error) {
         throw Error(error)
     }
 };
 
-exports.isValidCoupon = async (code, date) => {
-    return await Coupon.findOne({
-        CouponCode: code,
-        startDate: { $lte: date },
-        endDate: { $gte: date }
-    }).lean()
-}
+exports.createLead = async (LeadData) => {
+    try {
+        let newLead=new Lead(LeadData)
+        return await newLead.save();
+    } catch (error) {
+        throw Error(error)
+    }
+};
 
-exports.list = (perPage, page) => {
-    return new Promise((resolve, reject) => {
-        Coupon.find()
-            .limit(perPage)
-            .skip(perPage * page)
-            .exec(function (err, Coupons) {
-                if (err) {
-                    reject(err)
-                } else {
-                    resolve(Coupons);
-                }
-            });
-    })
+
+exports.list = async (perPage, page = 0) => {
+    return await Lead.find()
 };
 
 

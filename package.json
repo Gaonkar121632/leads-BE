@@ -1,18 +1,18 @@
 {
   "name": "backend-server",
   "version": "1.0.0",
-  "description": "It's backend api server app for Coupon",
+  "description": "It's backend api server app for leadsapp",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "NODE_ENV=dev node server.js "
   },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "ejs": "^3.1.5",
     "express": "^4.17.1",
     "joi": "^17.2.1",
     "mongoose": "^5.7.12",
+    "swagger-ui-express": "^4.1.4",
     "tracer": "^1.1.3"
   },
   "devDependencies": {

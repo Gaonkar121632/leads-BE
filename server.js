@@ -3,6 +3,8 @@ const config = require('./config/default.config')
 const express = require('express');
 
 const app = express();
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./util/swagger.json');
 
 const bodyParser = require('body-parser');
 const logger = require("./app/services/logger")
@@ -20,7 +22,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const CouponRouter = require('./app/routes/coupon.router');
+const LeadRouter = require('./app/routes/lead.router');
 
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -30,9 +32,11 @@ app.use(bodyParser.json());
 
 
 let router = express.Router();
-let couponRouter = CouponRouter.routesConfig(router);
+let leadRouter = LeadRouter.routesConfig(router);
 
-app.use('/api', [couponRouter]);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+app.use('/api', [leadRouter]);
 
 
 
@@ -41,6 +45,7 @@ app.on('listening', function () {
 });
 app.listen(app.get('port'), function () {
   logger.info('app listening at port %s', config.port);
+  console.log('Open http://localhost:3004/api-docs/ to check swagger API docs', config.port);
 });
 
 process.on('uncaughtException', function (err) {
